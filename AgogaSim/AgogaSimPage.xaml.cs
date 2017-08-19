@@ -50,6 +50,14 @@ namespace AgogaSim
         public IList<Detail> Resume { get; set; }
 	}
 
+    public class Report
+    {
+        public Company Company { get; set; }
+        public Person Person { get; set; }
+        public IList<Detail> Resume { get; set; }
+        public IList<DayReport> Days { get; set; }
+    }
+
 	public class BaseViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -133,39 +141,54 @@ namespace AgogaSim
 
 			return false;
 		}
+    }
 
-		public async Task<string> Login2()
+    public class RestService
+    {
+		Uri baseUri;
+		HttpClient client;
+
+		public RestService()
 		{
-			var uri = new Uri(baseUri, "getApuracao");
+			baseUri = new Uri("https://www.ahgora.com.br/externo/");
 
-			try
-			{
-				var data = new Dictionary<string, string> {
-					{ "company", "a718864" },
-					{ "matricula", "82" },
+			client = new HttpClient();
+			client.MaxResponseContentBufferSize = 256000;
+			client.DefaultRequestHeaders.Accept.Clear();
+		}
+
+        public async Task<Report> Login()
+        {
+            var uri = new Uri(baseUri, "getApuracao");
+
+            try
+            {
+                var data = new Dictionary<string, string> {
+                    { "company", "a718864" },
+                    { "matricula", "82" },
                     { "senha", "3277" },
                     { "mes", "08" },
                     { "ano", "2017" }
-				};
-				var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
-				jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-				
+                };
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
+                jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+                
                 var response = await client.PostAsync(uri, jsonContent);
-				if (response.IsSuccessStatusCode)
-				{
-					var content = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
                     Debug.WriteLine(content);
                     return content;
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
                 return ex.Message;
-			}
+            }
 
-			return "";
-		}
+            return "";
+        }
     }
 
     public class AgogaSimViewModel : BaseViewModel
