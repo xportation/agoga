@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:AgogaSim" 
+    x:Class="AgogaSim.AgogaSimPage">
+    <ScrollView BackgroundColor="White">
+        <StackLayout>
+            <!--Empresa-->
+            <Label Text="{Binding Report.Company.Id}" FontSize="Small" TextColor="Black" />
+            <Label Text="{Binding Report.Company.Name}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" />
+            <Grid>
+                <Label Text="Inicia no dia" FontSize="Small" TextColor="Black"/>
+                <Label Text="{Binding Report.Company.StartDay}" FontSize="Small" TextColor="Black" Grid.Row="1"/>
+                <Label Text="Mês anterior" FontSize="Small" TextColor="Black" Grid.Column="1" />
+                <Label Text="{Binding Report.Company.StartMonthBefore}" FontSize="Small" TextColor="Black" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+            <BoxView BackgroundColor="Black" HeightRequest="1"/>
+            <!--Peao-->
+            <Label Text="{Binding Report.Person.Id}" FontSize="Small" TextColor="Black" />
+            <Label Text="{Binding Report.Person.Name}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" />
+            <Label Text="{Binding Report.Person.JobDescription}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Data de admissão:" FontSize="Small" TextColor="Black" />
+                <Label Text="{Binding Report.Person.HireDate, StringFormat='{0:d}'}" FontSize="Small" TextColor="Black" />
+            </StackLayout>
+            <BoxView BackgroundColor="Black" HeightRequest="1"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <!--Resumo-->
+                <ListView ItemsSource="{Binding Report.Resume}" SeparatorVisibility="None" HasUnevenRows="true" BackgroundColor="#EAEAEA" HeightRequest="100">
+                    <ListView.Header>
+                        <StackLayout>
+                            <Label Text="Relatório" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" />
+                        </StackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" />
+                                    <Label Text="{Binding Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="50" HorizontalOptions="End" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!--Batidas do Dia-->
+                <ListView ItemsSource="{Binding Report.Today.Punches}" SeparatorVisibility="None" HasUnevenRows="true" BackgroundColor="#EAEAEA" Grid.Row="1" HeightRequest="100">
+                    <ListView.Header>
+                        <StackLayout>
+                            <Label Text="Batidas do dia" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" />
+                        </StackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Time, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <BoxView BackgroundColor="Black" HeightRequest="1"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Saída estimada: " FontSize="Small" TextColor="Black" />
+                <Label Text="13:28" FontSize="Small" TextColor="Black" />
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
