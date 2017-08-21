@@ -3,52 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace AgogaSim
 {
-    public class Company
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public int StartDay { get; set; }
-        public bool StartMonthBefore { get; set; }
-    }
-
-    public class Detail
-    {
-		public string Value { get; set; }
-		public string Description { get; set; }
-    }
-
-    public class Punch
-    {
-        public TimeSpan Time { get; set; }
-        public string Device { get; set; }
-    }
-
-    public class DayReport
-    {
-        public DateTime Day { get; set; }
-        public IList<Punch> Punches { get; set; }
-        public IList<Detail> Resume { get; set; }
-        public string Justification { get; set; }
-		public TimeSpan DailyHours { get; set; }
-		public TimeSpan DailyInterval { get; set; }
-    }
-
-	public class Person
-	{
-		public string Id { get; set; }
-		public string Name { get; set; }
-        public string JobDescription { get; set; }
-        public DateTime HireDate { get; set; }
-        public IList<Detail> Resume { get; set; }
-	}
 
 	public class BaseViewModel : INotifyPropertyChanged
 	{
@@ -133,64 +93,30 @@ namespace AgogaSim
 
 			return false;
 		}
-
-		public async Task<string> Login2()
-		{
-			var uri = new Uri(baseUri, "getApuracao");
-
-			try
-			{
-				var data = new Dictionary<string, string> {
-					{ "company", "a718864" },
-					{ "matricula", "82" },
-                    { "senha", "3277" },
-                    { "mes", "08" },
-                    { "ano", "2017" }
-				};
-				var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
-				jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-				
-                var response = await client.PostAsync(uri, jsonContent);
-				if (response.IsSuccessStatusCode)
-				{
-					var content = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine(content);
-                    return content;
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(@"ERROR {0}", ex.Message);
-                return ex.Message;
-			}
-
-			return "";
-		}
     }
 
     public class AgogaSimViewModel : BaseViewModel
     {
-		private HttpService http;
+        private RestService rest;
   
-        public AgogaSimViewModel(HttpService http)
+        public AgogaSimViewModel(RestService rest)
         {
-            this.http = http;
+            this.rest = rest;
             LoadCommand.Execute(null);
         }
 
-        private string textParsed;
-        public string TextParsed
-        {
-            get { return textParsed; }
-            set
+		private Report report;
+        public Report Report 
+        { 
+            get { return report; } 
+            set 
             {
-                textParsed = value;
-                Notify("TextParsed");
+                report = value;
+                Notify("Report");
             }
         }
-
+		
         ICommand loadCommand;
-
         public ICommand LoadCommand
 		{
 			get
@@ -205,7 +131,7 @@ namespace AgogaSim
 				return;
 
 			IsProcessing = true;
-            TextParsed = await http.Login2();
+            this.Report = await rest.Login();
 			IsProcessing = false;
 		}
     }
@@ -215,8 +141,7 @@ namespace AgogaSim
         public AgogaSimPage()
         {
             InitializeComponent();
-
-            BindingContext = new AgogaSimViewModel(new HttpService());
+            BindingContext = new AgogaSimViewModel(new RestService());
         }
 
     }
