@@ -8,7 +8,7 @@ namespace AgogaSim
         {
             InitializeComponent();
 
-            MainPage = new AgogaSimPage();
+            MainPage = new NavigationPage(new AgogaSimPage());
         }
 
         protected override void OnStart()

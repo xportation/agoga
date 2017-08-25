@@ -47,18 +47,18 @@ namespace AgogaSim
             return report;
         }
 
-        public async Task<Report> Login()
+        public async Task<Report> LoadData(string company, string id, string password, DateTime date)
         {
             var uri = new Uri(baseUri, "getApuracao");
 
             try
             {
                 var data = new Dictionary<string, string> {
-                    { "company", "a718864" },
-                    { "matricula", "82" },
-                    { "senha", "3277" },
-                    { "mes", "08" },
-                    { "ano", "2017" }
+                    { "company", company },
+                    { "matricula", id },
+                    { "senha", password },
+                    { "mes", date.Month.ToString().PadLeft(2, '0') },
+                    { "ano", date.Year.ToString() }
                 };
                 var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
                 jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
