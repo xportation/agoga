@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -70,10 +72,11 @@ namespace AgogaSim
 		[JsonProperty("hora")]
 		public string TimeStr 
         { 
+            get { return timeStr; }
             set 
             {
-                timeStr = value;
-                Time = ConverterUtil.TimeFromString(timeStr);
+                Time = ConverterUtil.TimeFromString(value);
+				timeStr = value.Insert(value.Length - 2, ":");
             }
         }
 
@@ -86,6 +89,10 @@ namespace AgogaSim
 
 	public class DayReport
 	{
+		IList<string> hireHours = null;
+		IList<Detail> resume = null;
+		IList<Punch> punches = null;
+
         [JsonIgnore]
 		public DateTime Day { get; set; }
 
@@ -95,15 +102,58 @@ namespace AgogaSim
         }
 
 		[JsonProperty("batidas")]
-		public IList<Punch> Punches { get; set; }
+		public IList<Punch> Punches 
+        { 
+            get { return punches;  } 
+            set
+            {
+                punches = (from punch in value orderby punch.Time select punch).ToList();
+				
+                var strBuilder = new StringBuilder();
+				for (var i = 0; i < punches.Count(); i++)
+				{
+					var punch = punches[i];
+                    strBuilder.AppendFormat("{0}", punch.TimeStr);
+					if (i < punches.Count() - 1)
+                        strBuilder.Append(", ");
+				}
+                if (strBuilder.Length > 0)
+                    PunchesStr = strBuilder.ToString();
+                else
+                    PunchesStr = null;
+                
+				defineWorkedHours();
+            }
+        }
 
 		[JsonProperty("resultado")]
-		public IList<Detail> Resume { get; set; }
+		public IList<Detail> Resume 
+        { 
+            get { return resume; } 
+            set
+            {
+                resume = value;
+
+				var strBuilder = new StringBuilder();
+                for (var i = 0; i < resume.Count(); i++)
+                {
+                    var detail = resume[i];
+                    strBuilder.AppendFormat("{0,8} {1}", detail.Value, detail.Description);
+                    if (i < resume.Count()-1)
+                        strBuilder.AppendLine();
+                }
+                if (strBuilder.Length > 0)
+                    ResumeStr = strBuilder.ToString();
+                else
+                    ResumeStr = null;
+            }
+        }
+
+		[JsonProperty("status")]
+		public IList<string> Status { get; set; }
 
 		[JsonProperty("justificativa")]
 		public string Justification { get; set; }
-
-        IList<string> hireHours = null;
 
 		[JsonProperty("HORAS_CONTRATUAIS")]
         public IList<string> HireHours 
@@ -117,18 +167,48 @@ namespace AgogaSim
                     var hour = ConverterUtil.TimeFromString(h.Replace(":",""));
                     hours.Add(hour);
                 }
+                DayHiredHours = TimeSpan.Zero;
+                DayHiredInterval = TimeSpan.Zero;
                 if (hours.Count == 4)
                 {
-                    DailyInterval = hours[2] - hours[1];
-                    DailyHours = (hours[1] - hours[0]) + (hours[3] - hours[2]);
+                    DayHiredInterval = hours[2] - hours[1];
+                    DayHiredHours = (hours[1] - hours[0]) + (hours[3] - hours[2]);
                 }
             }
         }
 
+        void defineWorkedHours() 
+        { 
+            if (this.Punches.Count <= 1)
+            {
+                WorkedHours = TimeSpan.Zero;
+				return;               
+            }
+
+			var periods = new List<TimeSpan>();
+            for (var index = 0; index < Punches.Count - 1; index += 2)
+			{
+                var diff = Punches[index + 1].Time.Subtract(Punches[index].Time);
+				periods.Add(diff);
+			}
+
+			var timeWorked = new TimeSpan(periods[0].Hours, periods[0].Minutes, periods[0].Seconds);
+			for (var index = 1; index < periods.Count; index++)
+				timeWorked += periods[index];
+
+			WorkedHours = timeWorked.Duration();
+        }
+
+		[JsonIgnore]
+		public string PunchesStr { get; set; }
+		[JsonIgnore]
+		public string ResumeStr { get; set; }
+		[JsonIgnore]
+		public TimeSpan WorkedHours { get; set; }
+		[JsonIgnore]
+        public TimeSpan DayHiredHours { get; set; }
         [JsonIgnore]
-		public TimeSpan DailyHours { get; set; }
-        [JsonIgnore]
-		public TimeSpan DailyInterval { get; set; }
+        public TimeSpan DayHiredInterval { get; set; }
 	}
 
 	public class Person
@@ -177,10 +257,11 @@ namespace AgogaSim
             get { return days; } 
             set
             {
-                days = value;
+                Today = new DayReport { Day = DateTime.Today, WorkedHours = TimeSpan.Zero, PunchesStr = "--" };
+                days = (from day in value where day.Resume.Count() > 0 orderby day.Day descending select day).ToList();
                 foreach (DayReport day in days)
                 {
-                    if (day.Day == DateTime.Today.AddDays(-3))
+                    if (day.Day == DateTime.Today)
                         Today = day;
                 }
             }
@@ -188,5 +269,20 @@ namespace AgogaSim
 
         [JsonIgnore]
         public DayReport Today { get; set; }
-	}
+
+        public bool ShouldReadNextMonth()
+        {
+            if (Company != null)
+            {
+                return Company.StartMonthBefore && DateTime.Today.Day >= Company.StartDay;
+            }
+            return false;
+        }
+
+        public void AddDays(IList<DayReport> days)
+        {
+            var allDays = Days.Concat(days);
+            Days = allDays.GroupBy(day => day.Day).Select(day => day.First()).ToList();
+        }
+    }
 }

@@ -46,6 +46,10 @@
     </Compile>
     <Compile Include="Services\RestService.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Converters\NullableVisibleConverter.cs" />
+    <Compile Include="ViewModels\AgogaSimViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Converters\ExpandedIconConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -68,6 +72,8 @@
     <Folder Include="Pages\" />
     <Folder Include="Services\" />
     <Folder Include="Models\" />
+    <Folder Include="Converters\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ProjectExtensions>
