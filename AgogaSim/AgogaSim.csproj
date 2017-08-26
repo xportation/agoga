@@ -49,6 +49,7 @@
     <Compile Include="Converters\NullableVisibleConverter.cs" />
     <Compile Include="ViewModels\AgogaSimViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Converters\ExpandedIconConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

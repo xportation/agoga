@@ -73,10 +73,10 @@ namespace AgogaSim
                 return;
 
             IsProcessing = true;
-            var reportData = await rest.LoadData("a718864", "82", "3277", DateTime.Today);
+            var reportData = await rest.LoadData("a718864", "10000241", "l10000241s", DateTime.Today);
             if (reportData != null && reportData.ShouldReadNextMonth())
             {
-                var nextReport = await rest.LoadData("a718864", "82", "3277", DateTime.Today.AddMonths(1));
+                var nextReport = await rest.LoadData("a718864", "10000241", "l10000241s", DateTime.Today.AddMonths(1));
                 if (nextReport != null)
                     reportData.AddDays(nextReport.Days);
             }

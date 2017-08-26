@@ -121,6 +121,24 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_arrow_down.png" />
+    <BundleResource Include="Resources\ic_arrow_left.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding_footer.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding_header.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding.png" />
+    <BundleResource Include="Resources\ic_timeline_off.png" />
+    <BundleResource Include="Resources\ic_timeline_on.png" />
+    <BundleResource Include="Resources\logo.png" />
+    <BundleResource Include="Resources\ic_arrow_down%402x.png" />
+    <BundleResource Include="Resources\ic_arrow_left%402x.png" />
+    <BundleResource Include="Resources\ic_timeline_off%402x.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding%402x.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding_footer%402x.png" />
+    <BundleResource Include="Resources\ic_timeline_off_padding_header%402x.png" />
+    <BundleResource Include="Resources\ic_timeline_on%402x.png" />
+    <BundleResource Include="Resources\logo%402x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.267\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.267\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>

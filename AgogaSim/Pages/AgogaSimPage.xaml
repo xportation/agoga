@@ -5,15 +5,17 @@
     xmlns:converters="clr-namespace:AgogaSim;assembly=AgogaSim"
     xmlns:local="clr-namespace:AgogaSim" 
     x:Class="AgogaSim.AgogaSimPage"
-    Title="AgogaSim">
+    BackgroundColor="White">
     <CarouselPage.Resources>
         <ResourceDictionary>
             <converters:NullVisibleConverter x:Key="NullVisibleConverter"/>
             <converters:NullNotVisibleConverter x:Key="NullNotVisibleConverter"/>
+            <converters:ExpandedTimelineIconConverter x:Key="ExpandedTimelineIconConverter"/>
+            <converters:ExpandedIconConverter x:Key="ExpandedIconConverter"/>
         </ResourceDictionary>
     </CarouselPage.Resources>
     <ContentPage>
-        <ScrollView BackgroundColor="White">
+        <ScrollView>
             <StackLayout Spacing="0">
                 <!--Peao-->
                 <StackLayout Padding="10,15,10,0">
@@ -44,7 +46,7 @@
                 <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
 
                 <!--Report-->
-                <Label Text="Relatório" FontSize="Large" TextColor="Gray" HorizontalOptions="StartAndExpand" Margin="10,0,10,10">
+                <Label Text="Relatório" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,10">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -62,7 +64,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail1.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="70" HorizontalOptions="End">
+                    <Label Text="{Binding Detail1.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="70" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -81,7 +83,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail2.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
+                    <Label Text="{Binding Detail2.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -100,7 +102,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail3.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
+                    <Label Text="{Binding Detail3.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -119,7 +121,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail4.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
+                    <Label Text="{Binding Detail4.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -138,7 +140,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail5.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
+                    <Label Text="{Binding Detail5.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -157,7 +159,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Label Text="{Binding Detail6.Value}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
+                    <Label Text="{Binding Detail6.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -170,7 +172,7 @@
                 <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
 
                 <!--Dia-->
-                <Label Text="{Binding Report.Today.Day, StringFormat='Dia: {0:d}'}" FontSize="Large" TextColor="Gray" HorizontalOptions="StartAndExpand" Margin="10,0,10,0">
+                <Label Text="{Binding Report.Today.Day, StringFormat='Dia: {0:d}'}" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,0">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -219,7 +221,7 @@
                 <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
 
                 <!--Batidas-->
-                <Label Text="Batidas do dia" FontSize="Large" TextColor="Gray" HorizontalOptions="StartAndExpand" Margin="10,0,10,10">
+                <Label Text="Batidas do dia" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,10">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <OnPlatform.Android>monospace</OnPlatform.Android>
@@ -240,90 +242,107 @@
     </ContentPage>
     <ContentPage>
         <ListView ItemsSource="{Binding Days}" SeparatorColor="#F5F5F5" SeparatorVisibility="None"
-            HasUnevenRows="true" IsPullToRefreshEnabled="false" ItemTapped="Handle_ItemTapped" Margin="0,10,0,0">
+            HasUnevenRows="true" IsPullToRefreshEnabled="false" ItemTapped="Handle_ItemTapped">
+            <ListView.Header>
+                <StackLayout Spacing="0">
+                    <Image Source="ic_timeline_off_padding_header.png" HorizontalOptions="Start" WidthRequest="50" HeightRequest="25"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.Footer>
+                <StackLayout Spacing="0">
+                    <Image Source="ic_timeline_off_padding_footer.png" HorizontalOptions="Start" WidthRequest="50" HeightRequest="25"/>
+                </StackLayout>
+            </ListView.Footer>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <StackLayout Padding="10,10,5,0">
-                                <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d}'}" LineBreakMode="TailTruncation" FontSize="Medium" TextColor="Black" 
-                                    HorizontalOptions="StartAndExpand">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <OnPlatform.Android>monospace</OnPlatform.Android>
-                                            <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-                                <Label Text="{Binding DayReport.WorkedHours, StringFormat='Horas trabalhadas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Medium" TextColor="Gray" 
-                                    HorizontalOptions="StartAndExpand">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <OnPlatform.Android>monospace</OnPlatform.Android>
-                                            <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-                            </StackLayout>
-                            <Grid BackgroundColor="#F5F5F5" Padding="0,15,0,15" IsVisible="{Binding IsExpanded}">
-                                <StackLayout Padding="10,0,0,0">
-                                    <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.PunchesStr, Converter={StaticResource NullNotVisibleConverter}}">
-                                        <Label Text="Batidas" TextColor="#ABACAB" FontSize="Small">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-                                        <Label Text="{Binding DayReport.PunchesStr}" FontSize="Micro" FontAttributes="Bold">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-                                    </StackLayout>
-                                    <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.ResumeStr, Converter={StaticResource NullNotVisibleConverter}}">
-                                        <Label Text="Resumo" TextColor="#ABACAB" FontSize="Small">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-                                        <Label Text="{Binding DayReport.ResumeStr}" FontSize="Micro" FontAttributes="Bold">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-                                    </StackLayout>
-                                    <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.Justification, Converter={StaticResource NullNotVisibleConverter}}">
-                                        <Label Text="Justificativa" TextColor="#ABACAB" FontSize="Small">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-                                        <Label Text="{Binding DayReport.Justification}" FontSize="Micro" FontAttributes="Bold">
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <OnPlatform.Android>monospace</OnPlatform.Android>
-                                                    <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
+                        <StackLayout Spacing="0">
+                            <StackLayout Orientation="Horizontal" Spacing="0">
+                                <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedTimelineIconConverter}}" WidthRequest="50" HeightRequest="60"/>
+                                <StackLayout Padding="10,10,5,0" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                                        HorizontalOptions="StartAndExpand">
+                                        <Label.FontFamily>
+                                            <OnPlatform x:TypeArguments="x:String">
+                                                <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                            </OnPlatform>
+                                        </Label.FontFamily>
+                                    </Label>
+                                    <Label Text="{Binding DayReport.WorkedHours, StringFormat='Horas trabalhadas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#5D737E" 
+                                        HorizontalOptions="StartAndExpand">
+                                        <Label.FontFamily>
+                                            <OnPlatform x:TypeArguments="x:String">
+                                                <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                            </OnPlatform>
+                                        </Label.FontFamily>
+                                    </Label>
+                                </StackLayout>
+                                <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedIconConverter}}" HorizontalOptions="End" VerticalOptions="Center" 
+                                    Margin="0,0,10,0" WidthRequest="16" HeightRequest="16"/>
+                            </StackLayout>    
+                            <Grid BackgroundColor="#F5F5F5" IsVisible="{Binding IsExpanded}">
+                                <StackLayout Spacing="0" Orientation="Horizontal">
+                                    <Image Source="ic_timeline_off_padding.png" WidthRequest="50" Aspect="Fill"/>
+                                    <StackLayout Padding="10,15,0,15">
+                                        <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.PunchesStr, Converter={StaticResource NullNotVisibleConverter}}">
+                                            <Label Text="Batidas" TextColor="#ABACAB" FontSize="Small">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                            <Label Text="{Binding DayReport.PunchesStr}" FontSize="Micro" FontAttributes="Bold">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.ResumeStr, Converter={StaticResource NullNotVisibleConverter}}">
+                                            <Label Text="Resumo" TextColor="#ABACAB" FontSize="Small">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                            <Label Text="{Binding DayReport.ResumeStr}" FontSize="Micro" FontAttributes="Bold">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.Justification, Converter={StaticResource NullNotVisibleConverter}}">
+                                            <Label Text="Justificativa" TextColor="#ABACAB" FontSize="Small">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                            <Label Text="{Binding DayReport.Justification}" FontSize="Micro" FontAttributes="Bold">
+                                                <Label.FontFamily>
+                                                    <OnPlatform x:TypeArguments="x:String">
+                                                        <OnPlatform.Android>monospace</OnPlatform.Android>
+                                                        <OnPlatform.iOS>Menlo-Regular</OnPlatform.iOS>
+                                                    </OnPlatform>
+                                                </Label.FontFamily>
+                                            </Label>
+                                        </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
                             </Grid>
-                            <BoxView HeightRequest="1" BackgroundColor="#EAEAEA"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

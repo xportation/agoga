@@ -8,7 +8,14 @@ namespace AgogaSim
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new AgogaSimPage());
+            var page = new AgogaSimPage();
+            MainPage = new NavigationPage(page)
+            {
+                BarBackgroundColor = Color.White
+            };
+
+			if (Device.RuntimePlatform == Device.iOS)
+                NavigationPage.SetTitleIcon(page, new FileImageSource { File = "logo.png" });
         }
 
         protected override void OnStart()
