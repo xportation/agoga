@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
 
 namespace AgogaSim.iOS
@@ -13,6 +14,7 @@ namespace AgogaSim.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            PullToRefreshLayoutRenderer.Init();
 
             LoadApplication(new App());
 

@@ -14,6 +14,8 @@ namespace AgogaSim
             InitializeComponent();
 			vm = new AgogaSimViewModel(new RestService());
 			BindingContext = vm;
+
+            ToolbarItems.Add(new ToolbarItem("", "ic_logout", () => vm.LoadCommand.Execute(null)));
         }
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)

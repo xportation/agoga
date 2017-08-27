@@ -182,6 +182,7 @@ namespace AgogaSim
             if (this.Punches.Count <= 1)
             {
                 WorkedHours = TimeSpan.Zero;
+                IntervalDid = TimeSpan.Zero;
 				return;               
             }
 
@@ -197,6 +198,31 @@ namespace AgogaSim
 				timeWorked += periods[index];
 
 			WorkedHours = timeWorked.Duration();
+
+            if (Punches.Count >= 3)
+                IntervalDid = Punches.Last().Time.Subtract(Punches.First().Time).Subtract(WorkedHours);
+        }
+
+        public TimeSpan GetExpectedLeavingTime()
+        {
+            if (this.Punches == null || this.Punches.Count == 0)
+                return TimeSpan.Zero;
+
+            var interval = IntervalDid;
+            if (interval == TimeSpan.Zero)
+                interval = DayHiredInterval;
+
+            return Punches.First().Time + DayHiredHours + interval;
+        }
+
+        public static DayReport Zero()
+        {
+            return new DayReport { 
+                Day = DateTime.Today, 
+                WorkedHours = TimeSpan.Zero, 
+                IntervalDid = TimeSpan.Zero, 
+                PunchesStr = "--" 
+            };
         }
 
 		[JsonIgnore]
@@ -205,6 +231,8 @@ namespace AgogaSim
 		public string ResumeStr { get; set; }
 		[JsonIgnore]
 		public TimeSpan WorkedHours { get; set; }
+		[JsonIgnore]
+		public TimeSpan IntervalDid { get; set; }
 		[JsonIgnore]
         public TimeSpan DayHiredHours { get; set; }
         [JsonIgnore]
@@ -257,7 +285,7 @@ namespace AgogaSim
             get { return days; } 
             set
             {
-                Today = new DayReport { Day = DateTime.Today, WorkedHours = TimeSpan.Zero, PunchesStr = "--" };
+                Today = DayReport.Zero();
                 days = (from day in value where day.Resume.Count() > 0 orderby day.Day descending select day).ToList();
                 foreach (DayReport day in days)
                 {

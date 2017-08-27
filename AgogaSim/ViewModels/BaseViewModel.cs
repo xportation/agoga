@@ -9,8 +9,7 @@ namespace AgogaSim
 
         public void Notify(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void Notify(IList<string> propertyNames)
@@ -28,21 +27,14 @@ namespace AgogaSim
             set
             {
                 isProcessing = value;
-                IsEnabled = !isProcessing;
-
+                Notify("IsNotProcessing");
                 Notify("IsProcessing");
             }
         }
 
-        bool isEnabled = true;
-        public bool IsEnabled
+        public bool IsNotProcessing
         {
-            get { return isEnabled; }
-            set
-            {
-                isEnabled = value;
-                Notify("IsEnabled");
-            }
+            get { return !IsProcessing; }
         }
     }
 }
