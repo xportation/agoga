@@ -105,6 +105,12 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.2.3.4.267\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AgogaSim\AgogaSim.csproj">
@@ -122,6 +128,15 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
+    <None Include="Icon-60.png" />
+    <None Include="Icon-72.png" />
+    <None Include="Icon-72%402x.png" />
+    <None Include="Icon-Small-50.png" />
+    <None Include="Icon-Small-50%402x.png" />
+    <None Include="Icon.png" />
+    <None Include="Icon%402x.png" />
+    <None Include="ItunesArtwork.png" />
+    <None Include="ItunesArtwork%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
@@ -145,6 +160,10 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_timeline_off_padding_header.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_timeline_on.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_timeline_off.png" />
+    <AndroidResource Include="Resources\drawable\ic_logout.png" />
+    <AndroidResource Include="Resources\drawable\ic_reload.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_logout.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_reload.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Compat.25.4.0.1\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Compat.25.4.0.1\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets')" />
