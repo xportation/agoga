@@ -47,19 +47,51 @@ namespace AgogaSim
             return report;
         }
 
+        Dictionary<string, string> buildCredentials(string company, string id, string password, DateTime date)
+        {
+			return new Dictionary<string, string> {
+					{ "company", company },
+					{ "matricula", id },
+					{ "senha", password },
+					{ "mes", date.Month.ToString().PadLeft(2, '0') },
+					{ "ano", date.Year.ToString() }
+				};
+        }
+
+		public async Task<bool> Login(string company, string id, string password)
+		{
+			var uri = new Uri(baseUri, "getApuracao");
+
+			try
+			{
+                var data = buildCredentials(company, id, password, DateTime.Today);
+				var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
+				jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+
+				var response = await client.PostAsync(uri, jsonContent);
+				if (response.IsSuccessStatusCode)
+				{
+                    var content = await response.Content.ReadAsStringAsync();
+                    JObject agogaData = JObject.Parse(content);
+                    return agogaData["empresa"]["empresa"].ToString() == company;
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"ERROR {0}", ex.Message);
+                return false;
+			}
+
+            return false;
+		}
+
         public async Task<Report> LoadData(string company, string id, string password, DateTime date)
         {
             var uri = new Uri(baseUri, "getApuracao");
 
             try
             {
-                var data = new Dictionary<string, string> {
-                    { "company", company },
-                    { "matricula", id },
-                    { "senha", password },
-                    { "mes", date.Month.ToString().PadLeft(2, '0') },
-                    { "ano", date.Year.ToString() }
-                };
+                var data = buildCredentials(company, id, password, date);
                 var jsonContent = new StringContent(JsonConvert.SerializeObject(data));
                 jsonContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
 

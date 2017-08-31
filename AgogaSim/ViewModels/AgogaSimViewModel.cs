@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Azure.Mobile.Analytics;
 using Xamarin.Forms;
 
 namespace AgogaSim
@@ -16,9 +17,11 @@ namespace AgogaSim
     public class AgogaSimViewModel : BaseViewModel
     {
         private RestService rest;
+        private ICredentialsService credentialsService;
 
-        public AgogaSimViewModel(RestService rest)
+        public AgogaSimViewModel(ICredentialsService credentialsService, RestService rest)
         {
+            this.credentialsService = credentialsService;
             this.rest = rest;
             Days = new ObservableCollection<DayReportViewModel>();
             IsStartingLoading = true;
@@ -54,7 +57,8 @@ namespace AgogaSim
                 foreach (var day in report.Days)
                     Days.Add(new DayReportViewModel { DayReport = day, IsExpanded = false });
 
-                Notify(new List<string> { "Report", "LeavingTime", "Detail1", "Detail2", "Detail3", "Detail4", "Detail5" });
+                Notify(new List<string> { "Report", "LeavingTime", "LeavingTimeObs", 
+                    "Detail1", "Detail2", "Detail3", "Detail4", "Detail5" });
             }
         }
 
@@ -67,6 +71,7 @@ namespace AgogaSim
         public Detail Detail5 { get; set; }
 
 		public string LeavingTime { get; set; }
+		public string LeavingTimeObs { get; set; }
 
         void defineLeavingTime()
         {
@@ -79,7 +84,12 @@ namespace AgogaSim
                 LeavingTime = "--:--";
             else
                 LeavingTime = String.Format("{0:hh\\:mm}", expectedTime);
-        }
+
+            if (expectedTime != TimeSpan.Zero && today.IntervalDid == TimeSpan.Zero)
+                LeavingTimeObs = String.Format("* utiliza intervalo de {0:hh\\:mm} (conforme cadastro)", today.DayHiredInterval);
+            else
+                LeavingTimeObs = null;
+		}
 
         ICommand loadCommand;
         public ICommand LoadCommand
@@ -92,23 +102,15 @@ namespace AgogaSim
 
         protected async Task ExecuteLoadCommand()
         {
-            if (IsProcessing)
+            if (IsProcessing || IsRefreshing)
                 return;
 
+            Analytics.TrackEvent("Load Command");
             IsProcessing = true;
             setDetailsToNull();
-            var reportData = await rest.LoadData("a718864", "10000241", "l10000241s", DateTime.Today);
-            if (reportData != null && reportData.ShouldReadNextMonth())
-            {
-                var nextReport = await rest.LoadData("a718864", "10000241", "l10000241s", DateTime.Today.AddMonths(1));
-                if (nextReport != null)
-                {
-                    nextReport.AddDays(reportData.Days);
-                    reportData = nextReport;
-                }
-            }
-            this.Report = reportData;
-            IsProcessing = false;
+			await loadDataFromServer();
+			IsProcessing = false;
+            IsRefreshing = false;
             IsStartingLoading= false;
         }
 
@@ -116,6 +118,53 @@ namespace AgogaSim
         {
 			Detail1 = Detail2 = Detail3 = Detail4 = Detail5 = null;
             Notify(new List<string> { "Detail1", "Detail2", "Detail3", "Detail4", "Detail5" });
+        }
+
+		ICommand refreshCommand;
+        public ICommand RefreshCommand
+		{
+			get
+			{
+				return refreshCommand ?? (refreshCommand = new Command(async () => await ExecuteRefreshCommand()));
+			}
+		}
+
+        protected async Task ExecuteRefreshCommand()
+        {
+            if (IsProcessing)
+            {
+				IsRefreshing = true;
+                return;
+            }
+
+            if (IsRefreshing)
+                return;
+
+            Analytics.TrackEvent("Refresh Command");
+            IsRefreshing = true;
+            await loadDataFromServer();
+            IsRefreshing = false;
+        }
+
+        private async Task loadDataFromServer()
+        {
+            var credentials = credentialsService.LoadCredentials();
+            if (credentials == null)
+                return;
+            
+            var reportData = await rest.LoadData(credentials.Company, credentials.UserID, 
+                                                 credentials.Password, DateTime.Today);
+            if (reportData != null && reportData.ShouldReadNextMonth())
+            {
+                var nextReport = await rest.LoadData(credentials.Company, credentials.UserID, 
+                                                     credentials.Password, DateTime.Today.AddMonths(1));
+                if (nextReport != null)
+                {
+                    nextReport.AddDays(reportData.Days);
+                    reportData = nextReport;
+                }
+            }
+            this.Report = reportData;
         }
     }
 }

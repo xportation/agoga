@@ -9,13 +9,13 @@ namespace AgogaSim
     {
         AgogaSimViewModel vm;
 
-        public AgogaSimPage()
+        public AgogaSimPage(ICredentialsService credentialsService, RestService restService)
         {
             InitializeComponent();
-			vm = new AgogaSimViewModel(new RestService());
+			vm = new AgogaSimViewModel(credentialsService, restService);
 			BindingContext = vm;
 
-            ToolbarItems.Add(new ToolbarItem("", "ic_logout", () => vm.LoadCommand.Execute(null)));
+            ToolbarItems.Add(new ToolbarItem("", "ic_logout", () => App.Logout()));
         }
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)

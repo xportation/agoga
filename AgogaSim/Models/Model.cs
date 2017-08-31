@@ -120,7 +120,7 @@ namespace AgogaSim
                 if (strBuilder.Length > 0)
                     PunchesStr = strBuilder.ToString();
                 else
-                    PunchesStr = null;
+                    PunchesStr = "--:--";
                 
 				defineWorkedHours();
             }
@@ -144,7 +144,7 @@ namespace AgogaSim
                 }
                 if (strBuilder.Length > 0)
                     ResumeStr = strBuilder.ToString();
-                else
+                else 
                     ResumeStr = null;
             }
         }
@@ -221,7 +221,7 @@ namespace AgogaSim
                 Day = DateTime.Today, 
                 WorkedHours = TimeSpan.Zero, 
                 IntervalDid = TimeSpan.Zero, 
-                PunchesStr = "--" 
+                PunchesStr = "--:--" 
             };
         }
 
@@ -285,8 +285,13 @@ namespace AgogaSim
             get { return days; } 
             set
             {
+                var hired = new DateTime();
+                if (Person != null)
+                    hired = Person.HireDate;
+                
                 Today = DayReport.Zero();
-                days = (from day in value where day.Resume.Count() > 0 orderby day.Day descending select day).ToList();
+                days = (from day in value where day.Day <= DateTime.Today && day.Day >= hired 
+                        orderby day.Day descending select day).ToList();
                 foreach (DayReport day in days)
                 {
                     if (day.Day == DateTime.Today)

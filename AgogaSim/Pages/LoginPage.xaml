@@ -1,5 +1,23 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AgogaSim.LoginPage">
-	<ContentPage.Content>
-	</ContentPage.Content>
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="AgogaSim.LoginPage"
+    BackgroundColor="White">
+	<StackLayout Padding="15,0,15,0">
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Image Source="logo.png" Margin="0,0,0,20"/>
+            <Entry Placeholder="Empresa" Text="{Binding Company}" Keyboard="Text" TextColor="Black" PlaceholderColor="Gray"/>
+            <Entry Placeholder="Matrícula" Text="{Binding User}" TextColor="Black" PlaceholderColor="Gray"/>
+            <Entry Placeholder="Senha" IsPassword="true" Text="{Binding Password}" TextColor="Black" PlaceholderColor="Gray"/>
+            <Button Text="ENTRAR" Command="{Binding LoginCommand}" IsEnabled="{Binding IsEnabled}" TextColor="#8298A3" BackgroundColor="Transparent" FontSize="Large" Margin="10"/>
+            <Grid HeightRequest="30">
+                <ActivityIndicator IsRunning="{Binding IsProcessing}" IsVisible="{Binding IsProcessing}" HeightRequest="20" WidthRequest="20"/>
+            </Grid>
+        </StackLayout>
+        <Label FontSize="Micro" Style="{DynamicResource FontLabel}" Margin="0,10,0,10" IsVisible="{Binding ShowExplainMessage}" TextColor="Gray">
+            <Label.Text>  
+               Considerações para utilizar o app:&#x0a;&#x0a;1. Este app não é oficial;&#x0a;2. Todos os dados utilizados são do seu sistema de ponto;&#x0a;3. São coletadas, de maneira anônima, informações de uso (horário inicia o app e busca os dados no servidor).
+           </Label.Text>
+        </Label>
+    </StackLayout>
 </ContentPage>
