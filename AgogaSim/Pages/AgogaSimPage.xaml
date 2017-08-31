@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:AgogaSim" 
     xmlns:controls="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
     x:Class="AgogaSim.AgogaSimPage"
+    NavigationPage.TitleIcon="logo"
     BackgroundColor="White">
     <CarouselPage.Resources>
         <ResourceDictionary>
@@ -13,14 +14,15 @@
             <converters:NullNotVisibleConverter x:Key="NullNotVisibleConverter"/>
             <converters:ExpandedTimelineIconConverter x:Key="ExpandedTimelineIconConverter"/>
             <converters:ExpandedIconConverter x:Key="ExpandedIconConverter"/>
+            <converters:WeekDayColorConverter x:Key="WeekDayColorConverter"/>
         </ResourceDictionary>
     </CarouselPage.Resources>
     <ContentPage>
         <controls:PullToRefreshLayout
             x:Name="PullToRefresh"
             IsPullToRefreshEnabled="True"
-            RefreshCommand="{Binding LoadCommand}"
-            IsRefreshing="{Binding IsProcessing, Mode=OneWay}">
+            RefreshCommand="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}">
             <ScrollView>
                 <StackLayout Spacing="0">
                     <ActivityIndicator IsRunning="{Binding IsStartingLoading}" IsVisible="{Binding IsStartingLoading}" HeightRequest="24" WidthRequest="24" Margin="5"/>
@@ -114,9 +116,13 @@
                     
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
-                        <StackLayout Orientation="Horizontal" Padding="10,5,10,10" IsVisible="{Binding IsNotProcessing}">
-                            <Label Text="Saída estimada: " FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
-                            <Label Text="{Binding LeavingTime}" FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                        <StackLayout IsVisible="{Binding IsNotProcessing}" Padding="10,5,10,10">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Saída estimada: " FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                                <Label Text="{Binding LeavingTime}" FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            </StackLayout>
+                            <Label Text="{Binding LeavingTimeObs}" FontSize="Micro" Style="{DynamicResource FontLabel}" 
+                                IsVisible="{Binding LeavingTimeObs, Converter={StaticResource NullNotVisibleConverter}}" TextColor="Gray"/>
                         </StackLayout>
                     </Grid>
                     
@@ -137,7 +143,7 @@
         <StackLayout Spacing="0">
 <!--            <ActivityIndicator IsRunning="{Binding IsProcessing}" IsVisible="{Binding IsProcessing}" HeightRequest="20" WidthRequest="20" Margin="5"/>-->
             <ListView ItemsSource="{Binding Days}" SeparatorColor="#F5F5F5" SeparatorVisibility="None"
-                HasUnevenRows="true" IsPullToRefreshEnabled="true" RefreshCommand="{Binding LoadCommand}" IsRefreshing="{Binding IsProcessing, Mode=OneWay}" ItemTapped="Handle_ItemTapped">
+                HasUnevenRows="true" IsPullToRefreshEnabled="true" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing, Mode=OneWay}" ItemTapped="Handle_ItemTapped">
                 <ListView.Header>
                     <StackLayout Spacing="0">
                         <Image Source="ic_timeline_off_padding_header.png" HorizontalOptions="Start" WidthRequest="50" HeightRequest="25"/>
@@ -152,10 +158,10 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Spacing="0">
-                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                <StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="{Binding DayReport.Day, Converter={StaticResource WeekDayColorConverter}}">
                                     <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedTimelineIconConverter}}" WidthRequest="50" HeightRequest="60"/>
                                     <StackLayout Padding="10,10,5,0" HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                                        <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d} ({0:ddd})'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
                                             HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                                         <Label Text="{Binding DayReport.WorkedHours, StringFormat='Horas trabalhadas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#5D737E" 
                                             HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>

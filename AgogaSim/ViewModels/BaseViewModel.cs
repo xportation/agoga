@@ -36,5 +36,16 @@ namespace AgogaSim
         {
             get { return !IsProcessing; }
         }
+
+        bool isRefreshing;
+		public bool IsRefreshing
+		{
+			get { return isRefreshing; }
+			set
+			{
+				isRefreshing = value;
+				Notify("IsRefreshing");
+			}
+		}
     }
 }
