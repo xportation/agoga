@@ -26,10 +26,9 @@ namespace AgogaSim
             this.credentialsService = credentialsService;
             this.restService = restService;
             this.ShowExplainMessage = false;
-            init();
         }
 
-		void init()
+		public void Init(bool didAppCrash)
 		{
 			var credentials = credentialsService.LoadCredentials();
 			if (credentials != null)
@@ -37,7 +36,7 @@ namespace AgogaSim
                 Company = credentials.Company;
 				User = credentials.UserID;
 				Password = credentials.Password;
-                if (credentials.AutomaticLogin)
+                if (credentials.AutomaticLogin && !didAppCrash)
                 {
                     this.automaticLogin = true;
                     LoginCommand.Execute(null);
@@ -92,7 +91,7 @@ namespace AgogaSim
 		}
 
 		ICommand loginCommand;
-		public ICommand LoginCommand
+        public ICommand LoginCommand
 		{
 			get
 			{

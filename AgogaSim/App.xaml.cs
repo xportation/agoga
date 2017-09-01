@@ -12,6 +12,7 @@ namespace AgogaSim
 
         RestService restService;
         AlertService alertService;
+		LoginPage loginPage = null;
 		ICredentialsService credentialsService;
 
         public static string AppName { get { return "AGOGA"; } }
@@ -24,20 +25,19 @@ namespace AgogaSim
             alertService = new AlertService(this);
 
             app = this;
-            MainPage = new LoginPage(credentialsService, restService, alertService);
+            loginPage = new LoginPage(credentialsService, restService, alertService);
+            MainPage = loginPage;
         }
 
 		public static void GoToMainPage()
 		{
             var mainPage = new AgogaSimPage(App.GetCredentialsService(), App.GetRestService());
 
+            app.loginPage = null;
 			app.MainPage = new NavigationPage(mainPage)
 			{
 				BarBackgroundColor = Color.White
 			};
-
-			//if (Device.RuntimePlatform == Device.iOS)
-                //NavigationPage.SetTitleIcon(mainPage, new FileImageSource { File = "logo.png" });
 		}
 
 		public static void Logout()
@@ -46,7 +46,9 @@ namespace AgogaSim
             var credentials = credentialsService.LoadCredentials();
             credentials.AutomaticLogin = false;
             credentialsService.SaveCredentials(credentials);
-            app.MainPage = new LoginPage(App.GetCredentialsService(), App.GetRestService(), App.GetAlertService());
+            var loginPage = new LoginPage(App.GetCredentialsService(), App.GetRestService(), App.GetAlertService());
+            loginPage.Init(false);
+            app.MainPage = loginPage;
 		}
 
 		public static RestService GetRestService()
@@ -64,11 +66,17 @@ namespace AgogaSim
 			return app.alertService;
 		}
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-			MobileCenter.Start("ios=15ff53da-3e73-4672-aef0-bbd8755678b1;" +
-				   "android=2432f771-0fed-406c-90da-1c4102974d36;",
-				   typeof(Analytics), typeof(Crashes));
+            if (loginPage != null)
+            {
+                bool didAppCrash = await Crashes.HasCrashedInLastSessionAsync();
+                loginPage.Init(didAppCrash);
+            }
+
+            MobileCenter.Start("ios=15ff53da-3e73-4672-aef0-bbd8755678b1;" +
+                   "android=2432f771-0fed-406c-90da-1c4102974d36;",
+                   typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

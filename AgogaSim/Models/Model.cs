@@ -87,6 +87,12 @@ namespace AgogaSim
 		public string Device { get; set; }
 	}
 
+    public class Justification
+    {
+        [JsonProperty("informacao")]
+        public string Information { get; set; }
+    }
+
 	public class DayReport
 	{
 		IList<string> hireHours = null;
@@ -153,7 +159,14 @@ namespace AgogaSim
 		public IList<string> Status { get; set; }
 
 		[JsonProperty("justificativa")]
-		public string Justification { get; set; }
+		public Justification Justification 
+        { 
+            set
+            {
+                if (value != null)
+                    JustificationStr = value.Information;
+            }
+        }
 
 		[JsonProperty("HORAS_CONTRATUAIS")]
         public IList<string> HireHours 
@@ -228,7 +241,9 @@ namespace AgogaSim
 		[JsonIgnore]
 		public string PunchesStr { get; set; }
 		[JsonIgnore]
-		public string ResumeStr { get; set; }
+        public string ResumeStr { get; set; }
+        [JsonIgnore]
+        public string JustificationStr { get; set; }
 		[JsonIgnore]
 		public TimeSpan WorkedHours { get; set; }
 		[JsonIgnore]
@@ -290,6 +305,10 @@ namespace AgogaSim
                     hired = Person.HireDate;
                 
                 Today = DayReport.Zero();
+
+                if (value == null)
+                    return;
+                
                 days = (from day in value where day.Day <= DateTime.Today && day.Day >= hired 
                         orderby day.Day descending select day).ToList();
                 foreach (DayReport day in days)
@@ -314,8 +333,41 @@ namespace AgogaSim
 
         public void AddDays(IList<DayReport> days)
         {
-            var allDays = Days.Concat(days);
-            Days = allDays.GroupBy(day => day.Day).Select(day => day.First()).ToList();
+            if (days != null)
+            {
+                if (Days == null)
+                    Days = days;
+                else
+                {
+                    var allDays = Days.Concat(days);
+                    Days = allDays.GroupBy(day => day.Day).Select(day => day.First()).ToList();
+                }
+            }
+        }
+
+        public static Report Zero()
+        {
+            var report = new Report();
+            report.Company = new Company();
+            report.Person = new Person();
+            report.Resume = new List<Detail>();
+            report.Days = new List<DayReport>();
+            return report;
+        }
+
+        public void ResolveNullData()
+        {
+            if (Company == null)
+                Company = new Company();
+
+            if (Person == null)
+			    Person = new Person();
+
+            if (Resume == null)
+                Resume = new List<Detail>();
+
+            if (Days == null)
+                Days = new List<DayReport>();
         }
     }
 }

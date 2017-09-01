@@ -151,20 +151,34 @@ namespace AgogaSim
             var credentials = credentialsService.LoadCredentials();
             if (credentials == null)
                 return;
-            
-            var reportData = await rest.LoadData(credentials.Company, credentials.UserID, 
+
+            var reportData = await rest.LoadData(credentials.Company, credentials.UserID,
                                                  credentials.Password, DateTime.Today);
             if (reportData != null && reportData.ShouldReadNextMonth())
             {
-                var nextReport = await rest.LoadData(credentials.Company, credentials.UserID, 
+                var nextData = await rest.LoadData(credentials.Company, credentials.UserID,
                                                      credentials.Password, DateTime.Today.AddMonths(1));
-                if (nextReport != null)
+                if (nextData != null)
                 {
-                    nextReport.AddDays(reportData.Days);
-                    reportData = nextReport;
+                    nextData.AddDays(reportData.Days);
+                    reportData = nextData;
                 }
             }
-            this.Report = reportData;
+
+			if (reportData != null)
+			{
+    			var previousData = await rest.LoadData(credentials.Company, credentials.UserID, 
+                                                       credentials.Password, DateTime.Today.AddMonths(-1));
+                if (previousData != null)
+                    reportData.AddDays(previousData.Days);
+                   
+                reportData.ResolveNullData();
+                this.Report = reportData;
+            } else
+            {
+                this.Report = Report.Zero();
+                this.Report.Person.Name = "Problema ao carregar os dados.";
+            }
         }
     }
 }
