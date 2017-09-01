@@ -181,9 +181,9 @@
                                                 <Label Text="Resumo" TextColor="#ABACAB" FontSize="Small" Style="{DynamicResource FontLabel}"/>
                                                 <Label Text="{Binding DayReport.ResumeStr}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
                                             </StackLayout>
-                                            <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.Justification, Converter={StaticResource NullNotVisibleConverter}}">
+                                            <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.JustificationStr, Converter={StaticResource NullNotVisibleConverter}}">
                                                 <Label Text="Justificativa" TextColor="#ABACAB" FontSize="Small" Style="{DynamicResource FontLabel}"/>
-                                                <Label Text="{Binding DayReport.Justification}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
+                                                <Label Text="{Binding DayReport.JustificationStr}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>
