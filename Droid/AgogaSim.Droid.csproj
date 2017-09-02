@@ -154,15 +154,7 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
-    <None Include="Icon-60.png" />
-    <None Include="Icon-72.png" />
-    <None Include="Icon-72%402x.png" />
-    <None Include="Icon-Small-50.png" />
-    <None Include="Icon-Small-50%402x.png" />
     <None Include="Icon.png" />
-    <None Include="Icon%402x.png" />
-    <None Include="ItunesArtwork.png" />
-    <None Include="ItunesArtwork%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
