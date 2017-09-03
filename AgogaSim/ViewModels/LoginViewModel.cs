@@ -16,12 +16,9 @@ namespace AgogaSim
         public delegate void SuccessHandler();
         public event SuccessHandler OnSuccess;
 
-        bool automaticLogin;
-
         public LoginViewModel(ICredentialsService credentialsService, 
                               RestService restService, AlertService alertService)
         {
-            this.automaticLogin = false;
             this.alertService = alertService;
             this.credentialsService = credentialsService;
             this.restService = restService;
@@ -38,7 +35,6 @@ namespace AgogaSim
 				Password = credentials.Password;
                 if (credentials.AutomaticLogin && !didAppCrash)
                 {
-                    this.automaticLogin = true;
                     LoginCommand.Execute(null);
                 }
             } else {
@@ -116,15 +112,19 @@ namespace AgogaSim
             bool logged = await restService.Login(Company, User, Password);
             if (logged)
             {
+                if (ShowExplainMessage)
+                    await alertService.ShowAsync("Duas dicas para usar o app:\n\n" +
+                                                 "1. Deslize a tela para direita para ver o ponto de dias anteriores.\n" +
+                                                 "2. Bastar puxar (deslizar para baixo) em qualquer tela para atualizar as informações.", 
+                                                 "Bem Vinda(o)!!");
+                
                 OnSuccess?.Invoke();
             }
             else
             {
-                if (!automaticLogin)
-                    await alertService.ShowAsync("Problema ao efetuar o login.");
+                await alertService.ShowAsync("Problema ao efetuar o login.");
             }
 
-            automaticLogin = false;
 			IsProcessing = false;
 		}
     }
