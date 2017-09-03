@@ -156,14 +156,14 @@
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\ic_logout.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\ic_logout.imageset\ic_logout.png" />
-    <ImageAsset Include="Assets.xcassets\ic_logout.imageset\ic_logout%402x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40%403x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-60x60%403x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40%402x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-60x60%402x.png" />
+    <ImageAsset Include="Assets.xcassets\ic_more.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more.png" />
+    <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -171,6 +171,7 @@
     <Folder Include="Assets.xcassets\ic_logout.imageset\" />
     <Folder Include="Assets.xcassets\AppIcon.appiconset\" />
     <Folder Include="Assets.xcassets\logo.imageset\" />
+    <Folder Include="Assets.xcassets\ic_more.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -206,6 +207,8 @@
     <BundleResource Include="Resources\ic_reload.png" />
     <BundleResource Include="Resources\logo.png" />
     <BundleResource Include="Resources\logo%402x.png" />
+    <BundleResource Include="Resources\ic_more.png" />
+    <BundleResource Include="Resources\ic_more%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
