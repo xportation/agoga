@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CarouselPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:converters="clr-namespace:AgogaSim;assembly=AgogaSim"
+    xmlns:local="clr-namespace:AgogaSim" 
+    xmlns:controls="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+    x:Class="AgogaSim.AgogaSimPage"
+    NavigationPage.TitleIcon="logo"
+    BackgroundColor="White">
+    <CarouselPage.Resources>
+        <ResourceDictionary>
+            <converters:NullVisibleConverter x:Key="NullVisibleConverter"/>
+            <converters:NullNotVisibleConverter x:Key="NullNotVisibleConverter"/>
+            <converters:ExpandedTimelineIconConverter x:Key="ExpandedTimelineIconConverter"/>
+            <converters:ExpandedIconConverter x:Key="ExpandedIconConverter"/>
+            <converters:WeekDayColorConverter x:Key="WeekDayColorConverter"/>
+        </ResourceDictionary>
+    </CarouselPage.Resources>
+    <ContentPage>
+        <controls:PullToRefreshLayout
+            x:Name="PullToRefresh"
+            IsPullToRefreshEnabled="True"
+            RefreshCommand="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}">
+            <ScrollView>
+                <StackLayout Spacing="0">
+                    <ActivityIndicator IsRunning="{Binding IsStartingLoading}" IsVisible="{Binding IsStartingLoading}" HeightRequest="24" WidthRequest="24" Margin="5"/>
+                    <!--Peao-->
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="20" Margin="10,0,60,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Padding="10,18,10,0">
+                            <Label Text="{Binding Report.Person.Name}" LineBreakMode="TailTruncation" FontSize="Medium" TextColor="Black" 
+                                HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <!--Empresa-->
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,30,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Padding="10,5,10,0">
+                            <Label Text="{Binding Report.Company.Name}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                                HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
+
+                    <!--Report-->
+                    <Label Text="Relatório" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" Style="{DynamicResource FontLabel}"/>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail1, Converter={StaticResource NullNotVisibleConverter}}"
+                            Padding="10,5,10,0">
+                            <Label Text="{Binding Detail1.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail1.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="70" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail2, Converter={StaticResource NullNotVisibleConverter}}"
+                            Padding="10,5,10,0">
+                            <Label Text="{Binding Detail2.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail2.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail3, Converter={StaticResource NullNotVisibleConverter}}"
+                            Padding="10,5,10,0">
+                            <Label Text="{Binding Detail3.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail3.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail4, Converter={StaticResource NullNotVisibleConverter}}"
+                            Padding="10,5,10,0">
+                            <Label Text="{Binding Detail4.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail4.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail5, Converter={StaticResource NullNotVisibleConverter}}"
+                            Padding="10,5,10,0">
+                            <Label Text="{Binding Detail5.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail5.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+
+                    <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
+
+                    <!--Dia-->
+                    <Grid>
+                        <Label Text="Dia: --/--/----" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,0" Style="{DynamicResource FontLabel}" IsVisible="{Binding IsProcessing}"/>
+                        <Label Text="{Binding Report.Today.Day, StringFormat='Dia: {0:d}'}" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,0" 
+                            Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
+                    </Grid>
+
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,15,40,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" Padding="10,15,10,0" IsVisible="{Binding IsNotProcessing}">
+                            <Label Text="Horas trabalhadas: " FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Report.Today.WorkedHours, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" Padding="10,5,10,10" IsVisible="{Binding IsNotProcessing}">
+                            <Label Text="Intervalo realizado: " FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Report.Today.IntervalDid, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout IsVisible="{Binding IsNotProcessing}" Padding="10,5,10,10">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Saída estimada: " FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                                <Label Text="{Binding LeavingTime}" FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            </StackLayout>
+                            <Label Text="{Binding LeavingTimeObs}" FontSize="Micro" Style="{DynamicResource FontLabel}" 
+                                IsVisible="{Binding LeavingTimeObs, Converter={StaticResource NullNotVisibleConverter}}" TextColor="Gray"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <BoxView BackgroundColor="#DDDDDD" HeightRequest="1" Margin="0,15,0,15"/>
+
+                    <!--Batidas-->
+                    <Label Text="Batidas do dia" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" Style="{DynamicResource FontLabel}"/>
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,0,50,10" IsVisible="{Binding IsProcessing}"/>
+                        <Label Text="{Binding Report.Today.PunchesStr}" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" 
+                            Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </controls:PullToRefreshLayout>
+    </ContentPage>
+    <ContentPage>
+        <StackLayout Spacing="0">
+<!--            <ActivityIndicator IsRunning="{Binding IsProcessing}" IsVisible="{Binding IsProcessing}" HeightRequest="20" WidthRequest="20" Margin="5"/>-->
+            <ListView ItemsSource="{Binding Days}" SeparatorColor="#F5F5F5" SeparatorVisibility="None"
+                HasUnevenRows="true" IsPullToRefreshEnabled="true" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing, Mode=OneWay}" ItemTapped="Handle_ItemTapped">
+                <ListView.Header>
+                    <StackLayout Spacing="0">
+                        <Image Source="ic_timeline_off_padding_header.png" HorizontalOptions="Start" WidthRequest="50" HeightRequest="25"/>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.Footer>
+                    <StackLayout Spacing="0">
+                        <Image Source="ic_timeline_off_padding_footer.png" HorizontalOptions="Start" WidthRequest="50" HeightRequest="25"/>
+                    </StackLayout>
+                </ListView.Footer>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Spacing="0">
+                                <StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="{Binding DayReport.Day, Converter={StaticResource WeekDayColorConverter}}">
+                                    <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedTimelineIconConverter}}" WidthRequest="50" HeightRequest="60"/>
+                                    <StackLayout Padding="10,10,5,0" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d} ({0:ddd})'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                                            HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                                        <Label Text="{Binding DayReport.WorkedHours, StringFormat='Horas trabalhadas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#5D737E" 
+                                            HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                                    </StackLayout>
+                                    <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedIconConverter}}" HorizontalOptions="End" VerticalOptions="Center" 
+                                        Margin="0,0,10,0" WidthRequest="16" HeightRequest="16"/>
+                                </StackLayout>    
+                                <Grid BackgroundColor="#F5F5F5" IsVisible="{Binding IsExpanded}">
+                                    <StackLayout Spacing="0" Orientation="Horizontal">
+                                        <Image Source="ic_timeline_off_padding.png" WidthRequest="50" Aspect="Fill"/>
+                                        <StackLayout Padding="10,15,0,15">
+                                            <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.PunchesStr, Converter={StaticResource NullNotVisibleConverter}}">
+                                                <Label Text="Batidas" TextColor="#ABACAB" FontSize="Small" Style="{DynamicResource FontLabel}"/>
+                                                <Label Text="{Binding DayReport.PunchesStr}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
+                                            </StackLayout>
+                                            <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.ResumeStr, Converter={StaticResource NullNotVisibleConverter}}">
+                                                <Label Text="Resumo" TextColor="#ABACAB" FontSize="Small" Style="{DynamicResource FontLabel}"/>
+                                                <Label Text="{Binding DayReport.ResumeStr}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
+                                            </StackLayout>
+                                            <StackLayout Padding="0,5,0,0" IsVisible="{Binding DayReport.JustificationStr, Converter={StaticResource NullNotVisibleConverter}}">
+                                                <Label Text="Justificativa" TextColor="#ABACAB" FontSize="Small" Style="{DynamicResource FontLabel}"/>
+                                                <Label Text="{Binding DayReport.JustificationStr}" FontSize="Micro" FontAttributes="Bold" Style="{DynamicResource FontLabel}"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+</CarouselPage>
