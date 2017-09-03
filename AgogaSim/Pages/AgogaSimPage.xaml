@@ -19,11 +19,10 @@
     </CarouselPage.Resources>
     <ContentPage>
         <controls:PullToRefreshLayout
-            x:Name="PullToRefresh"
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}">
-            <ScrollView>
+            <ScrollView x:Name="ScrollResume">
                 <StackLayout Spacing="0">
                     <ActivityIndicator IsRunning="{Binding IsStartingLoading}" IsVisible="{Binding IsStartingLoading}" HeightRequest="24" WidthRequest="24" Margin="5"/>
                     <!--Peao-->

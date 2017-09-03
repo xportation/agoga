@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
@@ -20,6 +21,9 @@ namespace AgogaSim
         public App()
         {
             InitializeComponent();
+			CultureInfo ptBRCulture = new CultureInfo("pt-BR");
+			CultureInfo.DefaultThreadCurrentCulture = ptBRCulture;
+
             credentialsService = DependencyService.Get<ICredentialsService>();
             restService = new RestService();
             alertService = new AlertService(this);
