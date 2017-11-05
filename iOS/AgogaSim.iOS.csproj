@@ -164,6 +164,7 @@
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more.png" />
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-1024x1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -209,6 +210,8 @@
     <BundleResource Include="Resources\logo%402x.png" />
     <BundleResource Include="Resources\ic_more.png" />
     <BundleResource Include="Resources\ic_more%402x.png" />
+    <BundleResource Include="Resources\ic_warning.png" />
+    <BundleResource Include="Resources\ic_warning%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />

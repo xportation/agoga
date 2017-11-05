@@ -14,7 +14,9 @@
             <converters:NullNotVisibleConverter x:Key="NullNotVisibleConverter"/>
             <converters:ExpandedTimelineIconConverter x:Key="ExpandedTimelineIconConverter"/>
             <converters:ExpandedIconConverter x:Key="ExpandedIconConverter"/>
+            <converters:WarningIconConverter x:Key="WarningIconConverter"/>
             <converters:WeekDayColorConverter x:Key="WeekDayColorConverter"/>
+            <converters:BalanceColorConverter x:Key="BalanceColorConverter"/>
         </ResourceDictionary>
     </CarouselPage.Resources>
     <ContentPage>
@@ -29,7 +31,7 @@
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="20" Margin="10,0,60,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Padding="10,18,10,0">
-                            <Label Text="{Binding Report.Person.Name}" LineBreakMode="TailTruncation" FontSize="Medium" TextColor="Black" 
+                            <Label Text="{Binding Report.Person.Name}" LineBreakMode="TailTruncation" FontSize="Medium" TextColor="#222A2E" 
                                 HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
                         </StackLayout>
                     </Grid>
@@ -38,7 +40,7 @@
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,30,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Padding="10,5,10,0">
-                            <Label Text="{Binding Report.Company.Name}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                            <Label Text="{Binding Report.Company.Name}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#222A2E" 
                                 HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
                         </StackLayout>
                     </Grid>
@@ -51,7 +53,7 @@
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail1, Converter={StaticResource NullNotVisibleConverter}}"
                             Padding="10,5,10,0">
-                            <Label Text="{Binding Detail1.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail1.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                             <Label Text="{Binding Detail1.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="70" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
@@ -59,7 +61,7 @@
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail2, Converter={StaticResource NullNotVisibleConverter}}"
                             Padding="10,5,10,0">
-                            <Label Text="{Binding Detail2.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail2.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                             <Label Text="{Binding Detail2.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
@@ -67,7 +69,7 @@
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail3, Converter={StaticResource NullNotVisibleConverter}}"
                             Padding="10,5,10,0">
-                            <Label Text="{Binding Detail3.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail3.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                             <Label Text="{Binding Detail3.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
@@ -75,7 +77,7 @@
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail4, Converter={StaticResource NullNotVisibleConverter}}"
                             Padding="10,5,10,0">
-                            <Label Text="{Binding Detail4.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail4.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                             <Label Text="{Binding Detail4.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
@@ -83,7 +85,7 @@
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,10,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding Detail5, Converter={StaticResource NullNotVisibleConverter}}"
                             Padding="10,5,10,0">
-                            <Label Text="{Binding Detail5.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Detail5.Description}" LineBreakMode="MiddleTruncation" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
                             <Label Text="{Binding Detail5.Value}" FontSize="Small" TextColor="#8298A3" HorizontalTextAlignment="End" WidthRequest="80" HorizontalOptions="End" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
@@ -100,25 +102,35 @@
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,15,40,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" Padding="10,15,10,0" IsVisible="{Binding IsNotProcessing}">
-                            <Label Text="Horas trabalhadas: " FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
-                            <Label Text="{Binding Report.Today.WorkedHours, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="Horas trabalhadas: " FontSize="Small" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Report.Today.WorkedHours, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
+                        </StackLayout>
+                    </Grid>
+
+                    <Grid>
+                        <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
+                        <StackLayout Orientation="Horizontal" Padding="10,5,10,0" IsVisible="{Binding IsNotProcessing}">
+                            <Label Text="Intervalo realizado: " FontSize="Small" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="{Binding Report.Today.IntervalDid, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
                         </StackLayout>
                     </Grid>
 
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout Orientation="Horizontal" Padding="10,5,10,10" IsVisible="{Binding IsNotProcessing}">
-                            <Label Text="Intervalo realizado: " FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
-                            <Label Text="{Binding Report.Today.IntervalDid, StringFormat='{0:hh\\:mm}'}" FontSize="Small" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                            <Label Text="Saldo do dia: " FontSize="Small" TextColor="#222A2E" Style="{DynamicResource FontLabel}" 
+                                IsVisible="{Binding Report.Today.BalanceStr, Converter={StaticResource NullNotVisibleConverter}}"/>
+                            <Label Text="{Binding Report.Today.BalanceStr, StringFormat='{0}'}" FontSize="Small" TextColor="{Binding Report.Today.BalanceStr, Converter={StaticResource BalanceColorConverter}}" 
+                                Style="{DynamicResource FontLabel}" IsVisible="{Binding Report.Today.BalanceStr, Converter={StaticResource NullNotVisibleConverter}}"/>
                         </StackLayout>
                     </Grid>
-                    
+                   
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,5,40,0" IsVisible="{Binding IsProcessing}"/>
                         <StackLayout IsVisible="{Binding IsNotProcessing}" Padding="10,5,10,10">
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="Saída estimada: " FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
-                                <Label Text="{Binding LeavingTime}" FontSize="Medium" TextColor="Black" Style="{DynamicResource FontLabel}"/>
+                                <Label Text="Saída estimada: " FontSize="Medium" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
+                                <Label Text="{Binding LeavingTime}" FontSize="Medium" TextColor="#222A2E" Style="{DynamicResource FontLabel}"/>
                             </StackLayout>
                             <Label Text="{Binding LeavingTimeObs}" FontSize="Micro" Style="{DynamicResource FontLabel}" 
                                 IsVisible="{Binding LeavingTimeObs, Converter={StaticResource NullNotVisibleConverter}}" TextColor="Gray"/>
@@ -131,7 +143,7 @@
                     <Label Text="Batidas do dia" FontSize="Large" TextColor="#B0BEC5" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" Style="{DynamicResource FontLabel}"/>
                     <Grid>
                         <BoxView Color="#EEEEEE" HeightRequest="15" Margin="10,0,50,10" IsVisible="{Binding IsProcessing}"/>
-                        <Label Text="{Binding Report.Today.PunchesStr}" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" 
+                        <Label Text="{Binding Report.Today.PunchesStr}" FontSize="Small" TextColor="#222A2E" HorizontalOptions="StartAndExpand" Margin="10,0,10,10" 
                             Style="{DynamicResource FontLabel}" IsVisible="{Binding IsNotProcessing}"/>
                     </Grid>
                 </StackLayout>
@@ -160,15 +172,21 @@
                                 <StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="{Binding DayReport.Day, Converter={StaticResource WeekDayColorConverter}}">
                                     <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedTimelineIconConverter}}" WidthRequest="50" HeightRequest="60"/>
                                     <StackLayout Padding="10,10,5,0" HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding DayReport.Day, StringFormat='Dia: {0:d} ({0:ddd})'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="Black" 
+                                        <Label Text="{Binding DayReport.Day, StringFormat='{0:ddd}: {0:d}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#43525A" 
                                             HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
-                                        <Label Text="{Binding DayReport.WorkedHours, StringFormat='Horas trabalhadas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#5D737E" 
-                                            HorizontalOptions="StartAndExpand" Style="{DynamicResource FontLabel}"/>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding DayReport.WorkedHours, StringFormat='horas: {0:hh\\:mm}'}" LineBreakMode="TailTruncation" FontSize="Small" TextColor="#5D737E" 
+                                                Style="{DynamicResource FontLabel}"/>
+                                            <Label Text="{Binding DayReport.BalanceStr, StringFormat='({0})'}" FontSize="Small" TextColor="{Binding DayReport.BalanceStr, Converter={StaticResource BalanceColorConverter}}" 
+                                                Style="{DynamicResource FontLabel}" IsVisible="{Binding DayReport.BalanceStr, Converter={StaticResource NullNotVisibleConverter}}"/>
+                                        </StackLayout>
                                     </StackLayout>
+                                    <Image Source="{Binding DayReport.IsOddPunches, Converter={StaticResource WarningIconConverter}}" HorizontalOptions="End" VerticalOptions="Center" 
+                                        Margin="0,0,10,0" WidthRequest="16" HeightRequest="16"/>
                                     <Image Source="{Binding IsExpanded, Converter={StaticResource ExpandedIconConverter}}" HorizontalOptions="End" VerticalOptions="Center" 
                                         Margin="0,0,10,0" WidthRequest="16" HeightRequest="16"/>
                                 </StackLayout>    
-                                <Grid BackgroundColor="#F5F5F5" IsVisible="{Binding IsExpanded}">
+                                <Grid BackgroundColor="White" IsVisible="{Binding IsExpanded}">
                                     <StackLayout Spacing="0" Orientation="Horizontal">
                                         <Image Source="ic_timeline_off_padding.png" WidthRequest="50" Aspect="Fill"/>
                                         <StackLayout Padding="10,15,0,15">
