@@ -6,7 +6,9 @@
 	<StackLayout Padding="15,0,15,0">
         <StackLayout VerticalOptions="CenterAndExpand">
             <Image Source="logo.png" Margin="0,0,0,20"/>
-            <Entry Placeholder="Empresa" Text="{Binding Company}" Keyboard="Text" TextColor="Black" PlaceholderColor="Gray"/>
+            <Entry Placeholder="Empresa (código, ex: a88672)" Text="{Binding Company}" Keyboard="Text" TextColor="Black" PlaceholderColor="Gray"/>
+            <Label Text="Encontre o código no relatório online ou com seu RH." 
+                FontSize="Micro" Style="{DynamicResource FontLabel}" Margin="0,0,0,5" IsVisible="{Binding ShowExplainMessage}" TextColor="Gray"/>
             <Entry Placeholder="Matrícula" Text="{Binding User}" TextColor="Black" PlaceholderColor="Gray"/>
             <Entry Placeholder="Senha" IsPassword="true" Text="{Binding Password}" TextColor="Black" PlaceholderColor="Gray"/>
             <Button Text="ENTRAR" Command="{Binding LoginCommand}" IsEnabled="{Binding IsEnabled}" TextColor="#8298A3" BackgroundColor="Transparent" FontSize="Large" Margin="10"/>

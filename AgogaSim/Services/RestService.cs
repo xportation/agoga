@@ -22,9 +22,13 @@ namespace AgogaSim
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
             client.DefaultRequestHeaders.Accept.Clear();
+
+            LoginReport = null;
         }
 
-        Report loadReport(string content)
+        public Report LoginReport { get; set; }
+
+		Report loadReport(string content)
         {
             var report = JsonConvert.DeserializeObject<Report>(content);
 
@@ -72,6 +76,8 @@ namespace AgogaSim
 				if (response.IsSuccessStatusCode)
 				{
                     var content = await response.Content.ReadAsStringAsync();
+                    LoginReport = loadReport(content);
+
                     JObject agogaData = JObject.Parse(content);
                     return agogaData["empresa"]["empresa"].ToString() == company;
 				}

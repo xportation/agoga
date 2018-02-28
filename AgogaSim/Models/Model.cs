@@ -98,6 +98,12 @@ namespace AgogaSim
 		IList<string> hireHours = null;
 		IList<Detail> resume = null;
 		IList<Punch> punches = null;
+        private readonly string BALANCE_DESCRIPTION = "BANCO DE HORAS";
+
+        public DayReport()
+        {
+           IsOddPunches = false; 
+        }
 
         [JsonIgnore]
 		public DateTime Day { get; set; }
@@ -105,6 +111,9 @@ namespace AgogaSim
         public void SetDay(string day)
         {
             Day = ConverterUtil.DateFromString(day);
+
+            if (Day.Date == DateTime.Today)
+                IsOddPunches = false;
         }
 
 		[JsonProperty("batidas")]
@@ -127,7 +136,8 @@ namespace AgogaSim
                     PunchesStr = strBuilder.ToString();
                 else
                     PunchesStr = "--:--";
-                
+
+                IsOddPunches = punches.Count % 2 == 1;
 				defineWorkedHours();
             }
         }
@@ -147,6 +157,9 @@ namespace AgogaSim
                     strBuilder.AppendFormat("{0,8} {1}", detail.Value, detail.Description);
                     if (i < resume.Count()-1)
                         strBuilder.AppendLine();
+
+                    if (detail.Description.ToUpper().Contains(BALANCE_DESCRIPTION))
+                        BalanceStr = detail.Value;
                 }
                 if (strBuilder.Length > 0)
                     ResumeStr = strBuilder.ToString();
@@ -159,12 +172,18 @@ namespace AgogaSim
 		public IList<string> Status { get; set; }
 
 		[JsonProperty("justificativa")]
-		public Justification Justification 
+		public IList<Justification> Justification 
         { 
             set
             {
                 if (value != null)
-                    JustificationStr = value.Information;
+                {
+                    var builder = new StringBuilder();
+                    foreach (var j in value)
+                        builder.AppendLine(j.Information);
+                    
+                    JustificationStr = builder.Length > 0 ? builder.ToString() : null;
+                }
             }
         }
 
@@ -234,7 +253,8 @@ namespace AgogaSim
                 Day = DateTime.Today, 
                 WorkedHours = TimeSpan.Zero, 
                 IntervalDid = TimeSpan.Zero, 
-                PunchesStr = "--:--" 
+                PunchesStr = "--:--",
+                IsOddPunches = false
             };
         }
 
@@ -252,6 +272,10 @@ namespace AgogaSim
         public TimeSpan DayHiredHours { get; set; }
         [JsonIgnore]
         public TimeSpan DayHiredInterval { get; set; }
+		[JsonIgnore]
+		public string BalanceStr { get; set; }
+        [JsonIgnore]
+        public bool IsOddPunches { get; set; }
 	}
 
 	public class Person
