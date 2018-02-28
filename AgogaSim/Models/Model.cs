@@ -158,7 +158,7 @@ namespace AgogaSim
                     if (i < resume.Count()-1)
                         strBuilder.AppendLine();
 
-                    if (detail.Description.ToUpper() == BALANCE_DESCRIPTION)
+                    if (detail.Description.ToUpper().Contains(BALANCE_DESCRIPTION))
                         BalanceStr = detail.Value;
                 }
                 if (strBuilder.Length > 0)
@@ -172,12 +172,18 @@ namespace AgogaSim
 		public IList<string> Status { get; set; }
 
 		[JsonProperty("justificativa")]
-		public Justification Justification 
+		public IList<Justification> Justification 
         { 
             set
             {
                 if (value != null)
-                    JustificationStr = value.Information;
+                {
+                    var builder = new StringBuilder();
+                    foreach (var j in value)
+                        builder.AppendLine(j.Information);
+                    
+                    JustificationStr = builder.Length > 0 ? builder.ToString() : null;
+                }
             }
         }
 
