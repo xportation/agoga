@@ -152,7 +152,12 @@ namespace AgogaSim
             if (credentials == null)
                 return;
 
-            var reportData = await rest.LoadData(credentials.Company, credentials.UserID,
+            Report reportData = null;
+
+            if (IsStartingLoading && rest.LoginReport != null)
+                reportData = rest.LoginReport;
+            else
+                reportData = await rest.LoadData(credentials.Company, credentials.UserID,
                                                  credentials.Password, DateTime.Today);
             if (reportData != null && reportData.ShouldReadNextMonth())
             {
@@ -165,15 +170,20 @@ namespace AgogaSim
                 }
             }
 
-			if (reportData != null)
+            if (reportData != null)
 			{
-    			var previousData = await rest.LoadData(credentials.Company, credentials.UserID, 
-                                                       credentials.Password, DateTime.Today.AddMonths(-1));
-                if (previousData != null)
-                    reportData.AddDays(previousData.Days);
-                   
-                reportData.ResolveNullData();
-                this.Report = reportData;
+                // So carrega o mes anterior se a quantidade de dias for menor que 30
+                if (reportData.Days.Count < 30)
+                {
+                    var previousData = await rest.LoadData(credentials.Company, credentials.UserID,
+                                                           credentials.Password, DateTime.Today.AddMonths(-1));
+                    if (previousData != null)
+                        reportData.AddDays(previousData.Days);
+
+                    reportData.ResolveNullData();
+				}
+
+				this.Report = reportData;
             } else
             {
                 this.Report = Report.Zero();

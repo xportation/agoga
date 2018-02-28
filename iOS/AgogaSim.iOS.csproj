@@ -37,14 +37,14 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Leonardo Vitor da Silva (8TC3C8W4HV)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Leonardo Vitor da Silva (3FJHUZ2954)</CodesignKey>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>Visual Studio: Agoga Development</CodesignProvision>
+    <CodesignProvision>Agoga Profile</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>pdbonly</DebugType>
@@ -164,6 +164,7 @@
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more.png" />
     <ImageAsset Include="Assets.xcassets\ic_more.imageset\ic_more%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-1024x1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -209,6 +210,8 @@
     <BundleResource Include="Resources\logo%402x.png" />
     <BundleResource Include="Resources\ic_more.png" />
     <BundleResource Include="Resources\ic_more%402x.png" />
+    <BundleResource Include="Resources\ic_warning.png" />
+    <BundleResource Include="Resources\ic_warning%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
