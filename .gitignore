@@ -63,3 +63,4 @@ Components/*
 !**/packages/repositories.config
 
 .venv
+.vs
