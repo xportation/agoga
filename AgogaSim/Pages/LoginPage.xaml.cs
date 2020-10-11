@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Crashes;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace AgogaSim
 {
@@ -21,12 +16,11 @@ namespace AgogaSim
 			vm.OnSuccess += LoginPageOnSuccess;
 
 			BindingContext = vm;
-            Analytics.TrackEvent("Login");
         }
 
-        public void Init(bool didAppCrash)
+        public void Init()
         {
-            vm.Init(didAppCrash);
+            vm.Init(false);
         }
 
 		void LoginPageOnSuccess()

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Azure.Mobile.Analytics;
 using Xamarin.Forms;
 
 namespace AgogaSim
@@ -105,7 +104,6 @@ namespace AgogaSim
             if (IsProcessing || IsRefreshing)
                 return;
 
-            Analytics.TrackEvent("Load Command");
             IsProcessing = true;
             setDetailsToNull();
 			await loadDataFromServer();
@@ -140,7 +138,6 @@ namespace AgogaSim
             if (IsRefreshing)
                 return;
 
-            Analytics.TrackEvent("Refresh Command");
             IsRefreshing = true;
             await loadDataFromServer();
             IsRefreshing = false;

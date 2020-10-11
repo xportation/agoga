@@ -1,8 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Crashes;
+﻿using System.Globalization;
 using Xamarin.Forms;
 
 namespace AgogaSim
@@ -51,7 +47,7 @@ namespace AgogaSim
             credentials.AutomaticLogin = false;
             credentialsService.SaveCredentials(credentials);
             var loginPage = new LoginPage(App.GetCredentialsService(), App.GetRestService(), App.GetAlertService());
-            loginPage.Init(false);
+            loginPage.Init();
             app.MainPage = loginPage;
 		}
 
@@ -74,13 +70,8 @@ namespace AgogaSim
         {
             if (loginPage != null)
             {
-                bool didAppCrash = await Crashes.HasCrashedInLastSessionAsync();
-                loginPage.Init(didAppCrash);
+                loginPage.Init();
             }
-
-            MobileCenter.Start("ios=15ff53da-3e73-4672-aef0-bbd8755678b1;" +
-                   "android=2432f771-0fed-406c-90da-1c4102974d36;",
-                   typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()
